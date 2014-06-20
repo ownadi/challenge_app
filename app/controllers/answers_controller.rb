@@ -14,6 +14,21 @@ class AnswersController < ApplicationController
     end
   end
 
+  def like
+    @answer = Answer.find(params[:answer_id])
+
+    if Like.where(user_id: current_user.id, answer_id: @answer.id).any?
+      redirect_to question_path(@question)
+    else
+      @like = Like.new
+      @like.user = current_user
+      @like.answer = @answer
+
+      @like.save
+      redirect_to question_path(@question)
+    end
+  end
+
   private
 
     def set_question

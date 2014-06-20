@@ -5,4 +5,8 @@
     = l(answer.created_at, format: :long)
     '  by
     = link_to answer.user, user_path(answer.user)
-
+    br
+    = answer.likes.count
+    '  likes.
+    - if Like.where(user_id: current_user.id, answer_id: answer.id).empty?
+      = link_to 'Like', question_answer_like_path(@question, answer), method: :post

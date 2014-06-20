@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :questions do
     resources :answers, only: [:create]
+    resources :answers do
+      post 'like' => 'answers#like', as: :like
+    end
   end
 
   resources :users, only: [:show]

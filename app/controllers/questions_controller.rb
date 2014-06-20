@@ -15,6 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def edit
+    redirect_to @question unless @question.user == current_user
   end
 
   def create

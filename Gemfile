@@ -31,5 +31,5 @@ group :test do
   gem "cucumber-rails",     "~> 1.4.1", require: false
   gem "factory_girl"
   gem "rspec-rails"
+  gem 'shoulda-matchers'
 end
-

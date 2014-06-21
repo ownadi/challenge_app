@@ -3,6 +3,8 @@ class AnswersController < ApplicationController
   before_action :set_question
 
   def create
+    redirect_to question_path(@question) if @question.answers.where(accepted: true).any? #there's already accepted answer - redirect to question
+
     @answer = Answer.new(answer_params)
     @answer.user = current_user
     @answer.question = @question

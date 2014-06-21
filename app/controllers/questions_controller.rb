@@ -19,15 +19,20 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = Question.new(question_params)
-    @question.user = current_user
+    if current_user.points >= 10
+      @question = Question.new(question_params)
+      @question.user = current_user
 
-    if @question.save
-      redirect_to @question, notice: 'Question was successfully created.'
-    else
-      render :new
-    end
+      if @question.save
+        redirect_to @question, notice: 'Question was successfully created.'
+        current_user.update(points: current_user.points - 10)
+      else
+        render :new
+      end
+  else
+    redirect_to root_path, alert: 'Not enought points!'
   end
+    end
 
   def update
     if @question.update(question_params)

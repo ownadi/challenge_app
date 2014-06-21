@@ -29,6 +29,15 @@ class AnswersController < ApplicationController
     end
   end
 
+  def accept
+    if @question.user = current_user and @question.answers.where(accepted: true).empty?
+      @answer = Answer.find(params[:answer_id])
+      @answer.accepted = true
+      @answer.save
+    end
+      redirect_to question_path(@question)
+  end
+
   private
 
     def set_question

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :answers, only: [:create]
     resources :answers do
       post 'like' => 'answers#like', as: :like
+      post 'accept' => 'answers#accept', as: :accept
     end
   end
 

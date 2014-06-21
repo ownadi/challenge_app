@@ -6,7 +6,11 @@
     '  by
     = link_to answer.user, user_path(answer.user)
     br
-    = answer.likes.count
-    '  likes.
+    = pluralize(answer.likes.count, 'like')
     - if Like.where(user_id: current_user.id, answer_id: answer.id).empty?
       = link_to 'Like', question_answer_like_path(@question, answer), method: :post
+    br
+    - if @question.user == current_user and @question.answers.where(accepted: true).empty?
+      = link_to 'Mark as accepted', question_answer_accept_path(@question, answer), method: :post
+    - if answer.accepted
+      ' Accepted!

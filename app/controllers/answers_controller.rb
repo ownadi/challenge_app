@@ -27,6 +27,7 @@ class AnswersController < ApplicationController
       @like.answer = @answer
 
       @like.save
+      @answer.user.update(points: @answer.user.points + 5)
       redirect_to question_path(@question)
     end
   end
@@ -36,6 +37,7 @@ class AnswersController < ApplicationController
       @answer = Answer.find(params[:answer_id])
       @answer.accepted = true
       @answer.save
+      @answer.user.update(points: @answer.user.points + 25)
     end
       redirect_to question_path(@question)
   end

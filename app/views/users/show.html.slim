@@ -1,6 +1,8 @@
 .user id="user-#{@user.id}"
   h2= @user
-  = image_tag current_user.avatar.url(:avatars), alt: @user
+  = image_tag @user.avatar.url(:avatars), alt: @user
+  - if @user.deserved
+    =  image_tag 'super_star.png', alt: 'badge'
   .questions
     h3 Questions
 

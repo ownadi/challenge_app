@@ -11,8 +11,18 @@ class User < ActiveRecord::Base
   has_attached_file :avatar, :styles => { :avatars => "100x100#" }, :default_url => "/images/:style/missing.png"
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
 
+  after_save :check_if_deserved
+
   def to_s
     return name if self.name.present?
     email
   end
+
+  private
+
+    def check_if_deserved
+      unless self.deserved #am i already deserved? if no lets check
+        self.update(deserved: true) if self.points >= 1000 #yes i am :) gimme my badge!
+      end
+    end
 end

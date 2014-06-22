@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140621132958) do
+ActiveRecord::Schema.define(version: 20140622151849) do
 
   create_table "answers", force: true do |t|
     t.integer  "question_id"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20140621132958) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "points",             default: 100
+    t.string   "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

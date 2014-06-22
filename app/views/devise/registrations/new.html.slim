@@ -8,6 +8,10 @@ h1 Sign up
     = f.email_field :email, autofocus: true
 
   .field
+    label= f.label :name
+    = f.text_field :name
+
+  .field
     label= f.label :password
     = f.password_field :password, autocomplete: 'off'
 
@@ -17,4 +21,3 @@ h1 Sign up
 
   div
     = f.submit "Sign up"
-

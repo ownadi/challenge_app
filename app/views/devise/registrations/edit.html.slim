@@ -8,6 +8,10 @@ h2 Edit Profile
     = f.email_field :email, autofocus: true
 
   .field
+    = f.label :name
+    = f.text_field :name
+
+  .field
     = f.label :password
     .hint
       ' (leave blank if you don't want to change it)
@@ -25,4 +29,3 @@ h2 Edit Profile
 
   div
     = f.submit "Update"
-

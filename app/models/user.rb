@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :likes
 
   def to_s
+    return name if self.name.present?
     email
   end
 end

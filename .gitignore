@@ -17,3 +17,6 @@
 
 # Ignore local config files
 /config/database.yml
+
+# Ignore system's assets
+/public/system

@@ -8,6 +8,9 @@ class User < ActiveRecord::Base
   has_many :answers
   has_many :likes
 
+  has_attached_file :avatar, :styles => { :avatars => "100x100#" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
+
   def to_s
     return name if self.name.present?
     email

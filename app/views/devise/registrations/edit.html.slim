@@ -4,6 +4,10 @@ h2 Edit Profile
   = devise_error_messages!
 
   .field
+    = f.label :avatar
+    = f.file_field :avatar
+
+  .field
     = f.label :email
     = f.email_field :email, autofocus: true
 

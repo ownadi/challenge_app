@@ -6,6 +6,7 @@ gem 'sqlite3', group: [:development, :test]
 gem 'pg', group: :production
 gem 'devise'
 gem 'paperclip'
+gem 'rails_12factor', group: :production
 
 # frontend
 gem 'slim-rails'

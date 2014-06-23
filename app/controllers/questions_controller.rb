@@ -15,24 +15,24 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    redirect_to @question unless @question.user == current_user
+    redirect_to @question unless current_user.author_of? @question
   end
 
   def create
-    if current_user.points >= 10
+    if current_user.can_create_question?
       @question = Question.new(question_params)
       @question.user = current_user
 
       if @question.save
         redirect_to @question, notice: 'Question was successfully created.'
-        current_user.update(points: current_user.points - 10)
+        current_user.take_question_price
       else
         render :new
       end
-  else
-    redirect_to root_path, alert: 'Not enought points!'
-  end
+    else
+      redirect_to root_path, alert: 'Not enought points!'
     end
+  end
 
   def update
     if @question.update(question_params)

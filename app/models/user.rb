@@ -18,6 +18,18 @@ class User < ActiveRecord::Base
     email
   end
 
+  def author_of?(content)
+    content.user == self
+  end
+
+  def can_create_question?
+    self.points >= 10
+  end
+
+  def take_question_price
+    self.update(points: self.points - 10)
+  end
+
   private
 
     def check_if_deserved

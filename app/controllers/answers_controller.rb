@@ -39,6 +39,7 @@ class AnswersController < ApplicationController
       @answer.accepted = true
       @answer.save
       @answer.user.update(points: @answer.user.points + 25)
+      AnswerMailer.accepted(@answer.user, @answer.question).deliver
     end
       redirect_to question_path(@question)
   end

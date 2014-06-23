@@ -26,8 +26,16 @@ class User < ActiveRecord::Base
     self.points >= 10
   end
 
+  def likes?(answer)
+    self.likes.where(answer_id: answer.id)
+  end
+
   def take_question_price
     self.update(points: self.points - 10)
+  end
+
+  def add_points(count)
+    self.update(points: self.points + count)
   end
 
   private

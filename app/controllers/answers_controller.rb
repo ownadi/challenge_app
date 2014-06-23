@@ -3,7 +3,7 @@ class AnswersController < ApplicationController
   before_action :set_question
 
   def create
-    redirect_to question_path(@question) if @question.answers.where(accepted: true).any? #there's already accepted answer - redirect to question
+    redirect_to question_path(@question) if @question.has_accepted_answer? #there's already accepted answer - redirect to question
 
     @answer = Answer.new(answer_params)
     @answer.user = current_user
@@ -20,7 +20,7 @@ class AnswersController < ApplicationController
   def like
     @answer = Answer.find(params[:answer_id])
 
-    if Like.where(user_id: current_user.id, answer_id: @answer.id).any?
+    if current_user.likes? @answer
       redirect_to question_path(@question)
     else
       @like = Like.new
@@ -28,17 +28,17 @@ class AnswersController < ApplicationController
       @like.answer = @answer
 
       @like.save
-      @answer.user.update(points: @answer.user.points + 5)
+      @answer.user.add_points(5)
       redirect_to question_path(@question)
     end
   end
 
   def accept
-    if @question.user = current_user and @question.answers.where(accepted: true).empty?
+    if current_user.author_of? @question and not @question.has_accepted_answer?
       @answer = Answer.find(params[:answer_id])
       @answer.accepted = true
       @answer.save
-      @answer.user.update(points: @answer.user.points + 25)
+      @answer.user.add_points(25)
       AnswerMailer.accepted(@answer.user, @answer.question).deliver
     end
       redirect_to question_path(@question)

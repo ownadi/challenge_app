@@ -10,7 +10,10 @@ class AnswersController < ApplicationController
     @answer.question = @question
 
     if @answer.save
-      QuestionMailer.new_answer(@question.user, @question).deliver
+      Thread.new do
+        QuestionMailer.new_answer(@question.user, @question).deliver
+        ActiveRecord::Base.connection.close
+      end
       redirect_to question_path(@question), notice: "Answer was successfully created."
     else
       redirect_to question_path(@question), alert: "There was an error when adding answer."
@@ -39,7 +42,10 @@ class AnswersController < ApplicationController
       @answer.accepted = true
       @answer.save
       @answer.user.add_points(25)
-      AnswerMailer.accepted(@answer.user, @answer.question).deliver
+      Thread.new do
+        AnswerMailer.accepted(@answer.user, @answer.question).deliver
+        ActiveRecord::Base.connection.close
+      end
     end
       redirect_to question_path(@question)
   end

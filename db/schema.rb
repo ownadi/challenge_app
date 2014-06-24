@@ -26,8 +26,8 @@ ActiveRecord::Schema.define(version: 20140624160314) do
   add_index "answers", ["user_id"], name: "index_answers_on_user_id"
 
   create_table "likes", force: true do |t|
-    t.string "user_id"
-    t.string "answer_id"
+    t.integer "user_id"
+    t.integer "answer_id"
   end
 
   add_index "likes", ["answer_id"], name: "index_likes_on_answer_id"

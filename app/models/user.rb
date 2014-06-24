@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
   end
 
   def likes?(answer)
-    self.likes.where(answer_id: answer.id)
+    self.likes.where(answer_id: answer.id).any?
   end
 
   def take_question_price

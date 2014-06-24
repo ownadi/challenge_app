@@ -6,9 +6,10 @@
     '  by
     = link_to answer.user, user_path(answer.user)
     br
-    = pluralize(answer.likes.count, 'like')
-    - unless current_user.likes? answer
-      = link_to 'Like', question_answer_like_path(@question, answer), method: :post
+    div id="like-#{answer.id}"
+      = pluralize(answer.likes.count, 'like')
+      - unless current_user.likes? answer
+        = link_to 'Like', question_answer_like_path(@question, answer), method: :post, remote: true
     br
     - if current_user.author_of? @question and not @question.has_accepted_answer?
       = link_to 'Mark as accepted', question_answer_accept_path(@question, answer), method: :post

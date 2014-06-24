@@ -24,7 +24,7 @@ class AnswersController < ApplicationController
     @answer = Answer.find(params[:answer_id])
 
     if current_user.likes? @answer
-      redirect_to question_path(@question)
+      redirect_to question_path(@question) #already liked!!
     else
       @like = Like.new
       @like.user = current_user
@@ -32,7 +32,8 @@ class AnswersController < ApplicationController
 
       @like.save
       @answer.user.add_points(5)
-      redirect_to question_path(@question)
+      respond_to :js
+      #render 'like.js'
     end
   end
 

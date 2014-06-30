@@ -11,8 +11,12 @@ class AnswersController < ApplicationController
 
     if @answer.save
       Thread.new do
-        QuestionMailer.new_answer(@question.user, @question).deliver
-        ActiveRecord::Base.connection.close
+        begin
+          QuestionMailer.new_answer(@question.user, @question).deliver
+        rescue
+        ensure
+          ActiveRecord::Base.connection.close
+        end
       end
       redirect_to question_path(@question), notice: "Answer was successfully created."
     else
@@ -44,8 +48,12 @@ class AnswersController < ApplicationController
       @answer.save
       @answer.user.add_points(25)
       Thread.new do
-        AnswerMailer.accepted(@answer.user, @answer.question).deliver
-        ActiveRecord::Base.connection.close
+        begin
+          AnswerMailer.accepted(@answer.user, @answer.question).deliver
+        rescue
+        ensure
+          ActiveRecord::Base.connection.close
+        end
       end
     end
       redirect_to question_path(@question)

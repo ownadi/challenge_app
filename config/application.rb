@@ -31,8 +31,8 @@ module ChallengeApp
       :address              => "smtp.gmail.com",
       :port                 => 587,
       :domain               => 'baci.lindsaar.net',
-      :user_name            => 'smtp.buddy',
-      :password             => 'zaq12wsxx',
+      :user_name            => ENV["GMAIL_USERNAME"],
+      :password             => ENV["GMAIL_PASSWORD"],
       :authentication       => 'plain',
       :enable_starttls_auto => true  }
   end

@@ -8,6 +8,7 @@ gem 'devise'
 gem 'omniauth-github'
 gem 'paperclip'
 gem 'rails_12factor', group: :production
+gem 'figaro'
 
 # frontend
 gem 'slim-rails'

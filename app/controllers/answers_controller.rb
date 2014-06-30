@@ -1,6 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_question
+  before_action :set_answer, except: [:create]
 
   def create
     redirect_to question_path(@question) if @question.has_accepted_answer? #there's already accepted answer - redirect to question
@@ -24,8 +25,6 @@ class AnswersController < ApplicationController
   end
 
   def like
-    @answer = Answer.find(params[:answer_id])
-
     if current_user.likes? @answer
       redirect_to question_path(@question) #already liked!!
     else
@@ -42,7 +41,6 @@ class AnswersController < ApplicationController
 
   def accept
     if current_user.author_of? @question and not @question.has_accepted_answer?
-      @answer = Answer.find(params[:answer_id])
       @answer.accepted = true
       @answer.save
       @answer.user.add_points(25)
@@ -61,6 +59,10 @@ class AnswersController < ApplicationController
 
     def set_question
       @question = Question.find(params[:question_id])
+    end
+
+    def set_answer
+      @answer = Answer.find(params[:answer_id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -12,8 +12,12 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'users/leaderboard' => 'users#leaderboard', as: :leaderboard
-  resources :users, only: [:show]
+  #get 'users/leaderboard' => 'users#leaderboard', as: :leaderboard
+  resources :users, only: [:show] do
+    collection do
+      get :leaderboard
+    end
+  end
 
 
   # The priority is based upon order of creation: first created -> highest priority.

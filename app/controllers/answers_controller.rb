@@ -13,7 +13,6 @@ class AnswersController < ApplicationController
       Thread.new do
         begin
           QuestionMailer.new_answer(@question.user, @question).deliver
-        rescue
         ensure
           ActiveRecord::Base.connection.close
         end
@@ -50,7 +49,6 @@ class AnswersController < ApplicationController
       Thread.new do
         begin
           AnswerMailer.accepted(@answer.user, @answer.question).deliver
-        rescue
         ensure
           ActiveRecord::Base.connection.close
         end
